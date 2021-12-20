@@ -1,0 +1,107 @@
+<!-- https://willianjusten.com.br/criando-o-efeito-da-chuva-do-matrix-com-javascript-puro -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Matrix Rain</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+  <body>
+    <canvas id="matrix"></canvas>
+  </body>
+  <script>
+    const letters = [
+      '日',
+      'ﾊ',
+      'ﾐ',
+      'ﾋ',
+      'ｰ',
+      'ｳ',
+      'ｼ',
+      'ﾅ',
+      'ﾓ',
+      'ﾆ',
+      'ｻ',
+      'ﾜ',
+      'ﾂ',
+      'ｵ',
+      'ﾘ',
+      'ｱ',
+      'ﾎ',
+      'ﾃ',
+      'ﾏ',
+      'ｹ',
+      'ﾒ',
+      'ｴ',
+      'ｶ',
+      'ｷ',
+      'ﾑ',
+      'ﾕ',
+      'ﾗ',
+      'ｾ',
+      'ﾈ',
+      'ｽ',
+      'ﾀ',
+      'ﾇ',
+      'ﾍ',
+      ':',
+      '・',
+      '.',
+      '=',
+      '*',
+      '+',
+      '-',
+      '<',
+      '>',
+      '¦',
+      '｜',
+      'ﾘ',
+    ]
+
+    const c = document.getElementById('matrix')
+    c.height = window.innerHeight
+    c.width = window.innerWidth
+
+    const fontSize = 18
+    const columns = c.width / fontSize
+    const drops = new Array(Math.floor(columns)).fill(1)
+
+    const ctx = c.getContext('2d')
+
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'
+      ctx.fillRect(0, 0, c.width, c.height)
+
+      ctx.fillStyle = '#0F0'
+      ctx.font = `${fontSize}px arial`
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)]
+
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize)
+
+        drops[i]++
+
+        if (drops[i] * fontSize > c.height && Math.random() > 0.95) {
+          drops[i] = 0
+        }
+      }
+
+      window.requestAnimationFrame(draw)
+    }
+
+    draw()
+  </script>
+</html>
